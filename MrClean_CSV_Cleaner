@@ -5,14 +5,14 @@
 
 import pandas as pd, numpy, os
 
-def header_cleaner(filename, N):
+def header_cleaner(filename, N, exp_string):
     global df
     print("Cleaning header row...")
     #print("\nDataframe Head\n--------------\n")
     df = pd.read_csv(filename, encoding="utf-8", header=N)
     print(df.head())  #  Prints the top 10 rows for your personal enjoyment
 
-    if "InvoiceID" not in df.iloc[N:]:  #  Checks whether the expected headers are present
+    if "EXPECTED STRING" not in df.iloc[N:]:  #  Checks whether the expected headers are present
         print("Header row was already clean. Re-creating the dataframe...\n")
         df = pd.read_csv(filename, encoding="utf-8")  
         print(df.head())
@@ -36,12 +36,13 @@ path = "C://Users//MDanish//.vscode//AWS Data//Data Files"
 dir_list = os.listdir(path)
 #print(dir_list)  #  This is here for output check
 N = "NUMBER_OF_HEADER_ROWS_HERE"
+exp_string = "WHATEVER SHOULD BE IN YOUR FIRST COLUMN HEADER"
 
 for file in dir_list:
     filename = path + "//" + file
     #print(filename)  #  This is here for debugging
 
-    header_cleaner(filename, N)
+    header_cleaner(filename, N, exp_string)
     null_replacer(df)
 
     
