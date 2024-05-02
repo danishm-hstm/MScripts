@@ -12,7 +12,7 @@ def header_cleaner(filename, N, exp_string):
     df = pd.read_csv(filename, encoding="utf-8", header=N)
     print(df.head())  #  Prints the top 10 rows for your personal enjoyment
 
-    if "EXPECTED STRING" not in df.iloc[N:]:  #  Checks whether the expected headers are present
+    if exp_string not in df.iloc[N:]:  #  Checks whether the expected headers are present
         print("Header row was already clean. Re-creating the dataframe...\n")
         df = pd.read_csv(filename, encoding="utf-8")  
         print(df.head())
