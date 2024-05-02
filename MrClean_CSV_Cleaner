@@ -5,6 +5,8 @@
 
 import pandas as pd, numpy, os
 
+# Function definitons
+
 def header_cleaner(filename, N, exp_string):
     global df
     print("Cleaning header row...")
@@ -31,6 +33,8 @@ def null_replacer(df):
     df.to_csv(path + '/' + f'Clean-Output-{file}')
 
     print("Done!")
+
+# End function definitions and start running stuff
 
 path = "C://Users//MDanish//.vscode//AWS Data//Data Files"
 dir_list = os.listdir(path)
