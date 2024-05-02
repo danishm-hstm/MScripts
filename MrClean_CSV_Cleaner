@@ -1,0 +1,46 @@
+# This script has two data preprocessing functions. 
+# The first function takes a CSV file and loads it into a dataframe without the first N number of rows (i.e., however many rows you expect to be full of nonsense). It then checks that the first row contains the expected headers, and if it doesn't,
+# it assumes the original header row was fine and reloads it into the dataframe.
+# The second function replaces any null values that could interfere with the import process (e.g., into a temperamental tool such as Power BI) with 0s.
+
+import pandas as pd, numpy, os
+
+def header_cleaner(filename):
+    global df
+    print("Cleaning header row...")
+    #print("\nDataframe Head\n--------------\n")
+    df = pd.read_csv(filename, encoding="utf-8", header=1)
+    print(df.head())  #  Prints the top 10 rows for your personal enjoyment
+
+    if "InvoiceID" not in df.iloc[1:]:  #  Checks whether the expected headers are present
+        print("Header row was already clean. Re-creating the dataframe...\n")
+        df = pd.read_csv(filename, encoding="utf-8")  
+        print(df.head())
+    else:
+        print(df.head())
+    return df
+
+def null_replacer(df):
+    print("Replacing null values...")
+  
+    df.fillna(0, inplace=True)  #  Calls an existing pandas method to replace NaN values
+    print(df.head())
+
+    print("Writing cleaned data to CSV...")
+
+    df.to_csv(path + '/' + f'Clean-Output-{file}')
+
+    print("Done!")
+
+path = "C://Users//MDanish//.vscode//AWS Data//Data Files"
+dir_list = os.listdir(path)
+#print(dir_list)  #  This is here for output check
+
+for file in dir_list:
+    filename = path + "//" + file
+    #print(filename)  #  This is here for debugging
+
+    header_cleaner(filename)
+    null_replacer(df)
+
+    
